@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+    lang="${i18n.lang}"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet 
+            library="default" 
+            name="css/default.css"/>
+        <h:outputStylesheet 
+            library="default" 
+            name="css/cssLayout.css"/>
+
+        <title>#{empty pageTitle ? i18n.title : pageTitle}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </h:head>
+
+    <h:body>
+
+        <ui:debug 
+            hotkey="k"
+            rendered="true" />
+
+        <div id="maingroup">
+
+            <header>
+                <ui:insert name="top">#{i18n.title}</ui:insert>
+            </header>
+
+            <div>
+                <nav id="left">
+                    <ui:insert name="left">
+                        <ul>
+                            <li><h:link
+                                    rendered="#{view.viewId.replace('/', '').replace('.xhtml','') ne 'welcome'}"
+                                    outcome="welcome"
+                                    value="#{i18n.gowelcome}" /></li>
+                            <li><h:link 
+                                    rendered="#{view.viewId.replace('/', '').replace('.xhtml','') ne 'main'}"
+                                    outcome="main" 
+                                    value="Home" /></li>
+                            <li><h:link 
+                                    rendered="#{util.canItBeRendered('index1')}"
+                                    outcome="index1" 
+                                    value="Index1" /></li>
+                            <li><h:link 
+                                    rendered="#{util.canItBeRendered('index2')}"
+                                    outcome="index2" 
+                                    value="Index2" /></li>
+                            <li><h:link 
+                                    rendered="#{util.canItBeRendered('about')}"
+                                    outcome="about" 
+                                    value="#{i18n.goabout}" /></li>
+                            <li><h:form>
+                                    <h:commandLink
+                                        rendered="#{not empty userBean.name}"
+                                        action="${userBean.logout}"
+                                        value="#{i18n.logout}" />
+                                </h:form></li>
+                        </ul>
+                    </ui:insert>
+                </nav>
+
+                <main class="left_content">
+                    <ui:insert name="content">Content</ui:insert>
+                </main>
+            </div>
+
+            <footer>
+                <ui:include src="footer.xhtml" />
+            </footer>
+        </div>
+
+    </h:body>
+
+</html>
